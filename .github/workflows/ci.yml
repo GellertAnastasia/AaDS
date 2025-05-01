@@ -1,0 +1,23 @@
+name: ASCII85 CI
+
+on: [push, pull_request]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y g++
+    
+    - name: Make scripts executable
+      run: |
+        chmod +x build.sh test.sh
+    
+    - name: Build and Test
+      run: |
+        ./test.sh

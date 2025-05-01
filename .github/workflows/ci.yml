@@ -11,13 +11,14 @@ jobs:
     
     - name: Install dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -y g++
+        sudo apt-get update && apt-get install -y g++
     
     - name: Make scripts executable
       run: |
+        cd ascii85
         chmod +x build.sh test.sh
     
     - name: Build and Test
       run: |
+        cd ascii85
         ./test.sh

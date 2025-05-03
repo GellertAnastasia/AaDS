@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cstring>
 #include <sstream>
-
+#include <cstdint>
 
 uint32_t to_uint32_be(const char* bytes);
 void encode(std::istream& in, std::ostream& out);

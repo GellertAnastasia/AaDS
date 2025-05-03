@@ -1,10 +1,16 @@
 #include "ascii85.h"
 
+
 int main(int argc, char* argv[])
 {
     if (argc == 1)
     {
-        encode();
+        std::string input;
+        std::getline(std::cin, input);
+
+        std::istringstream in(input);
+        encode(in, std::cout);
+        std::cout << std::endl;
     }
     for (int i = 1; i < argc; ++i)
     {
@@ -15,7 +21,12 @@ int main(int argc, char* argv[])
         }
         else if (arg == "-e")
         {
-            encode();
+            std::string input;
+            std::getline(std::cin, input);
+
+            std::istringstream in(input);
+            encode(in, std::cout);
+            std::cout << std::endl;
         }
         else
         {

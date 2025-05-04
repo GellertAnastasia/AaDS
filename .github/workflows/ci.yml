@@ -21,3 +21,4 @@ jobs:
       run: |
         cd ascii85
         make test
+        ./test_ascii85.sh

@@ -47,27 +47,54 @@ void encode(std::istream& in, std::ostream& out) {
     }
 }
 
-void decode()
-{
-    const size_t SIZE = 5;
-    char buffer[SIZE];
+void decode_block(const char* input, size_t padding, std::ostream& out) {
+    uint32_t number = 0;
+    for (int i = 0; i < 5; ++i) {
+        number = number * 85 + (static_cast<unsigned char>(input[i]) - 33);
+    }
 
-    while (true)
-    {
-        std::cin.read(buffer, SIZE);
-        size_t read = std::cin.gcount();
+    char decoded[4];
+    decoded[0] = (number >> 24) & 0xFF;
+    decoded[1] = (number >> 16) & 0xFF;
+    decoded[2] = (number >> 8) & 0xFF;
+    decoded[3] = number & 0xFF;
 
-        if (read == 0)
-        {
-            break;
+    size_t output_len = (padding > 0) ? 4 - padding : 4;
+    out.write(decoded, output_len);
+}
+
+void decode(std::istream& in, std::ostream& out) {
+    std::vector<char> buffer;
+    char ch;
+    while (in.get(ch)) {
+        if (std::isspace(static_cast<unsigned char>(ch))) continue;
+
+        if (ch == 'z') {
+            if (!buffer.empty()) {
+                std::cerr << "decoding error";
+                return;
+            }
+            char zero[4] = { 0, 0, 0, 0 };
+            out.write(zero, 4);
         }
-
-        if (read < SIZE)
-        {
-            throw std::runtime_error("decoding error");
+        
+        buffer.push_back(ch);
+        if (buffer.size() == 5) {
+            decode_block(buffer.data(), 0, out);
+            buffer.clear();
         }
+    }
 
-        std::cout.write(buffer, SIZE);
+    if (!buffer.empty()) {
+        if (buffer.size() < 2) {
+            std::cerr << "decoding error";
+            return;
+        }
+        size_t padding = 5 - buffer.size();
+        if (padding > 0) {
+            buffer.insert(buffer.end(), padding, 'u');
+        }
+        decode_block(buffer.data(), padding, out);
     }
 }
 

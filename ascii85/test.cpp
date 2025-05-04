@@ -17,7 +17,11 @@ int main(int argc, char* argv[])
         std::string arg = argv[i];
         if (arg == "-d")
         {
-            decode();
+            std::string input;
+            std::getline(std::cin, input); 
+            std::istringstream in(input);
+            decode(in, std::cout);
+            std::cout << std::endl;
         }
         else if (arg == "-e")
         {

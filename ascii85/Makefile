@@ -1,33 +1,33 @@
 CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++17 -I.
+CXXFLAGS = -Wall -Wextra -std=c++17 -Iinclude
 GTEST_FLAGS = -lgtest -lgtest_main -lpthread
 
-MAIN_TARGET = ascii85
-TEST_TARGET = ascii85_test
+# Имена программ
+MAIN = ascii85
+TEST = ascii85_test
 
-SRCS = $(wildcard *.cpp)
-MAIN_SRC = main.cpp
-LIB_SRCS = $(filter-out $(MAIN_SRC), $(SRCS))
-
-LIB_OBJS = $(LIB_SRCS:.cpp=.o)
-MAIN_OBJ = $(MAIN_SRC:.cpp=.o)
-TEST_OBJS = $(LIB_SRCS:.cpp=.o)
-
-all: $(MAIN_TARGET)
-
-$(MAIN_TARGET): $(MAIN_OBJ) $(LIB_OBJS)
+# Основная программа
+$(MAIN): main.o src/encoder.o src/decoder.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-$(TEST_TARGET): $(TEST_OBJS)
+# Тесты
+$(TEST): test.o src/encoder.o src/decoder.o
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(GTEST_FLAGS)
 
+# Правило для всех .o файлов
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-test: $(TEST_TARGET)
-	./$(TEST_TARGET)
+src/%.o: src/%.cpp include/%.h
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Цели по умолчанию
+all: $(MAIN)
+
+test: $(TEST)
+	./$(TEST)
 
 clean:
-	rm -f $(MAIN_TARGET) $(TEST_TARGET) *.o
+	rm -f $(MAIN) $(TEST) *.o src/*.o
 
 .PHONY: all clean test

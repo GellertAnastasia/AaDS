@@ -1,4 +1,5 @@
-#include "ascii85.h"
+#include "encoder.h"
+#include "decoder.h"
 
 int main(int argc, char* argv[])
 {

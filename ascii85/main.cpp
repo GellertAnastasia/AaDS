@@ -1,6 +1,5 @@
 #include "ascii85.h"
 
-
 int main(int argc, char* argv[])
 {
     bool decode_mode = false;

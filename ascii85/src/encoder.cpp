@@ -26,7 +26,6 @@ void encode(std::istream& in, std::ostream& out)
     char ch;
     while (in.get(ch))
     {
-        if (std::isspace(static_cast<unsigned char>(ch))) continue;
         buffer.push_back(ch);
         if (buffer.size() == 4)
         {

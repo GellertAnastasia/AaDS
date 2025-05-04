@@ -24,7 +24,9 @@ void decode(std::istream& in, std::ostream& out)
     char ch;
     while (in.get(ch))
     {
-        if (std::isspace(static_cast<unsigned char>(ch))) continue;
+        if (std::isspace(ch) && ch != ' ') {
+            continue;
+        }
 
         if (ch == 'z')
         {

@@ -17,9 +17,9 @@ jobs:
     - name: Make scripts executable
       run: |
         cd ascii85
-        chmod +x build.sh test.sh
+        chmod +x make
     
     - name: Build and Test
       run: |
         cd ascii85
-        ./test.sh
+        ./ascii85_test

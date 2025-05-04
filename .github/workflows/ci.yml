@@ -12,14 +12,14 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update -y
-        sudo apt-get install -y g++
-    
-    - name: Make scripts executable
+        sudo apt-get install -y g++ make libgtest-dev
+        
+    - name: Build main program
       run: |
         cd ascii85
-        chmod +x build.sh test.sh
-    
-    - name: Build and Test
+        make $(MAIN_TARGET)
+        
+    - name: Build and run tests
       run: |
         cd ascii85
-        ./test.sh
+        make test

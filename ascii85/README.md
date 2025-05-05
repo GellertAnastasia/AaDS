@@ -19,4 +19,8 @@ Reading from stdin
 
 Working with files
 ## Tests
+make test
+
 ./ascii85_test
+
+./test_ascii85.sh 

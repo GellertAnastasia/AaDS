@@ -32,13 +32,15 @@ void decode(std::istream& in, std::ostream& out)
         {
             if (!buffer.empty())
             {
-                std::cerr << "decoding error";
-                return;
+                throw std::runtime_error("'z' in the middle of block");
             }
             char zero[4] = { 0, 0, 0, 0 };
             out.write(zero, 4);
+            continue;
         }
-
+        if (ch < 33 || ch > 117) {
+            throw std::runtime_error("Invalid ASCII85 character");
+        }
         buffer.push_back(ch);
         if (buffer.size() == 5)
         {
@@ -51,8 +53,7 @@ void decode(std::istream& in, std::ostream& out)
     {
         if (buffer.size() < 2)
         {
-            std::cerr << "decoding error";
-            return;
+            throw std::runtime_error("Last block less than 2 characters");
         }
         size_t padding = 5 - buffer.size();
         if (padding > 0)

@@ -20,5 +20,22 @@ if ! cmp -s random.bin random.bin.test; then
   exit 1
 fi
 
+
+
+echo "invalid~data" > broken.a85
+./ascii85 -d <broken.a85 &>/dev/null
+
+if [ $? -eq 0 ]; then
+echo "[FAIL] Decoder did not catch error in broken data!"
+exit 1
+fi
+
+echo "1" > incomplete.a85
+./ascii85 -d <incomplete.a85 &>/dev/null
+if [ $? -eq 0 ]; then
+    echo "[FAIL] Decoder accepted a 1-character block!"
+    exit 1
+fi
+
 echo "[OK] All tests passed!"
 exit 0

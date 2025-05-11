@@ -1,23 +1,43 @@
-name: ASCII85 CI
+name: General CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ '**' ]
+  pull_request:
+    branches: [ '**' ]
 
 jobs:
   build-and-test:
+    if: startsWith(github.head_ref || github.ref_name, 'ascii85/')
     runs-on: ubuntu-latest
-    
     steps:
     - uses: actions/checkout@v4
-    
     - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y g++ cmake libgtest-dev
-        
+      run: sudo apt-get update && sudo apt-get install -y g++ cmake libgtest-dev 
     - name: Build main program
       run: |
         cd ascii85
         make ascii85
-        
     - name: Build and run tests
       run: |
         cd ascii85
         make test
+
+  build-and-test:
+    if: startsWith(github.head_ref || github.ref_name, 'gauss/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y g++ cmake libgtest-dev
+      - name: Install Eigen
+        run: sudo apt-get update && sudo apt-get install -y libeigen3-dev
+      - name: Build main program
+      run: |
+        cd gauss
+        make gauss
+      - name: Build and run tests
+      run: |
+        cd gauss
+        make test
+

@@ -2,29 +2,33 @@ name: General CI
 
 on:
   push:
-    branches: [ '**' ]
+    branches: [ '*' ]
   pull_request:
-    branches: [ '**' ]
+    branches: [ '*' ]
 
 jobs:
-  build-and-test:
-    if: startsWith(github.head_ref || github.ref_name, 'ascii85/')
+  build-and-test-ascii85:
+    if: |
+      (github.event_name == 'pull_request' && startsWith(github.head_ref, 'ascii85/')) ||
+      (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/ascii85/'))
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y g++ cmake libgtest-dev 
-    - name: Build main program
-      run: |
-        cd ascii85
-        make ascii85
-    - name: Build and run tests
-      run: |
-        cd ascii85
-        make test
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y g++ cmake libgtest-dev 
+      - name: Build main program
+        run: |
+          cd ascii85
+          make ascii85
+      - name: Build and run tests
+        run: |
+          cd ascii85
+          make test
 
-  build-and-test:
-    if: startsWith(github.head_ref || github.ref_name, 'gauss/')
+  build-and-test-gauss:
+    if: |
+      (github.event_name == 'pull_request' && startsWith(github.head_ref, 'gauss/')) ||
+      (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/gauss/'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -33,11 +37,10 @@ jobs:
       - name: Install Eigen
         run: sudo apt-get update && sudo apt-get install -y libeigen3-dev
       - name: Build main program
-      run: |
-        cd gauss
-        make gauss
+        run: |
+          cd gauss
+          make gauss
       - name: Build and run tests
-      run: |
-        cd gauss
-        make test
-
+        run: |
+          cd gauss
+          make test

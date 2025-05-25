@@ -92,3 +92,20 @@ TEST(GaussTest, Full) {
     std::remove("test_AB.csv");
     std::remove("solution.csv");
 }
+
+TEST(GaussTest, Random1) {
+    Eigen::MatrixXd random = Eigen::MatrixXd::Random(9,10);
+    Eigen::VectorXd mySolution = gaussianMethod(random);
+    Eigen::MatrixXd A = random.leftCols(random.cols() - 1);
+    Eigen::VectorXd b = random.rightCols(1);
+    Eigen::VectorXd x = A.colPivHouseholderQr().solve(b);
+    EXPECT_TRUE(mySolution.isApprox(x, 1e-6));
+}
+TEST(GaussTest, Random2) {
+    Eigen::MatrixXd random = Eigen::MatrixXd::Random(1000,1001);
+    Eigen::VectorXd mySolution = gaussianMethod(random);
+    Eigen::MatrixXd A = random.leftCols(random.cols() - 1);
+    Eigen::VectorXd b = random.rightCols(1);
+    Eigen::VectorXd x = A.colPivHouseholderQr().solve(b);
+    EXPECT_TRUE(mySolution.isApprox(x, 1e-6));
+}

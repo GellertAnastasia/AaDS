@@ -7,7 +7,6 @@ int main()
 
     Eigen::VectorXd solution = gaussianMethod(A);
     writeCSV(solution);
-    std::cout << "Solution:\n" << solution << "\n";
 
     return 0;
 }

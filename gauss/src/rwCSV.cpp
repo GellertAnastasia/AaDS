@@ -51,5 +51,4 @@ void writeCSV(const Eigen::VectorXd& x)
     }
 
     file.close();
-    std::cout << "Data written to " << "solution.csv" << std::endl;
 }

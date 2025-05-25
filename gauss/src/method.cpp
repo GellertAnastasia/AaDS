@@ -1,6 +1,6 @@
 #include "method.h"
 
-Eigen::VectorXd gaussianMethod(Eigen::MatrixXd A)
+Eigen::VectorXd gaussianMethod(Eigen::MatrixXd& A)
 {
     int n = A.rows();
     int m = A.cols();

@@ -5,10 +5,10 @@ LDFLAGS = -L/usr/local/lib -lgtest -lgtest_main -lpthread
 MAIN = gauss
 TEST = gauss_test
 
-$(MAIN): main.o src/method.o
+$(MAIN): main.o src/rwCSV.o src/method.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-$(TEST): test.o src/method.o
+$(TEST): test.o src/rwCSV.o src/method.o
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
 
 %.o: %.cpp
@@ -24,5 +24,6 @@ test: $(TEST)
 
 clean:
 	rm -f $(MAIN) $(TEST) *.o src/*.o
+	rm -f solution.csv
 
 .PHONY: all clean test

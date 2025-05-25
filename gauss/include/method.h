@@ -1,10 +1,10 @@
-#ifndef DECODER_H
-#define DECODER_H
+#ifndef METHOD_H
+#define METHOD_H
 #include <iostream>
 #include <vector>
 #include <Eigen/Dense>
 #include "../libs/lazycsv.hpp"
 
-Eigen::VectorXd gaussianMethod(Eigen::MatrixXd A);
+Eigen::VectorXd gaussianMethod(Eigen::MatrixXd& A);
 
 #endif

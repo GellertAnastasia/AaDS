@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -I/usr/include/eigen3 -Wall -Wextra -std=c++17 -Iinclude 
+CXXFLAGS = -I/usr/include/eigen3 -Wall -Wextra -std=c++17 -Iinclude -O3 -march=native -ffast-math -fopt-info-vec-optimized
 LDFLAGS = -L/usr/local/lib -lgtest -lgtest_main -lpthread
 
 MAIN = gauss

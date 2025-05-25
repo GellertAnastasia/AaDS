@@ -26,11 +26,14 @@ Eigen::VectorXd gaussianMethod(Eigen::MatrixXd& A)
             std::cerr << "Matrix is singular\n";
             return Eigen::VectorXd::Zero(n);
         }
-        A.row(i) /= A(i, i);
+        const double y = 1.0 / A(i,i);
+        A.row(i) *= y;
+        A(i,i) = 1.0;
 
         for (int k = i + 1; k < n; k++)
         {
-            A.row(k) -= A.row(i) * A(k, i);
+            const double y = A(k,i);
+            A.row(k) -= A.row(i) * y;
         }
     }
     
@@ -56,9 +59,8 @@ Eigen::VectorXd gaussianMethod(Eigen::MatrixXd& A)
     for (int i = n - 1; i >= 0; i--)
     {
         x(i) = A(i, m - 1);
-        for (int j = i + 1; j < n; j++)
-        {
-            x(i) -= A(i, j) * x(j);
+        if (i < n - 1) {
+            x(i) -= A.row(i).segment(i+1, n-i-1).dot(x.segment(i+1, n-i-1));
         }
     }
 

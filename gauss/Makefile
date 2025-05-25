@@ -5,10 +5,10 @@ LDFLAGS = -L/usr/local/lib -lgtest -lgtest_main -lpthread
 MAIN = gauss
 TEST = gauss_test
 
-$(MAIN): main.o
+$(MAIN): main.o src/method.o
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-$(TEST): test.o
+$(TEST): test.o src/method.o
 	$(CXX) $(CXXFLAGS) $^ -o $@ $(LDFLAGS)
 
 %.o: %.cpp

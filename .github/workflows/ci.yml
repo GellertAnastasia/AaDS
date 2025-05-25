@@ -9,8 +9,8 @@ on:
 jobs:
   build-and-test-ascii85:
     if: |
-      (github.event_name == 'pull_request' && startsWith(github.head_ref, 'ascii85/')) ||
-      (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/ascii85/'))
+      (github.event_name == 'pull_request' && github.ref == 'refs/heads/ascii85') ||
+      (github.event_name == 'push' && github.ref == 'refs/heads/ascii85')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,8 +27,8 @@ jobs:
 
   build-and-test-gauss:
     if: |
-      (github.event_name == 'pull_request' && startsWith(github.head_ref, 'gauss/')) ||
-      (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/gauss/'))
+      (github.event_name == 'pull_request' && github.ref == 'refs/heads/gauss') ||
+      (github.event_name == 'push' && github.ref == 'refs/heads/gauss')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
